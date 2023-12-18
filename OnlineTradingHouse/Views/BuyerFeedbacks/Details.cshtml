@@ -1,0 +1,57 @@
+﻿@model OnlineTradingHouse.Models.BuyerFeedback
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Feedback Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Feekback)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Feekback)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyerRequest.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyerRequest.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

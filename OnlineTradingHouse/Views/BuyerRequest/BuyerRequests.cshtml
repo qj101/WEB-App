@@ -1,0 +1,49 @@
+﻿@model IEnumerable<OnlineTradingHouse.Models.BuyerRequest>
+@{
+    ViewBag.Title = "Buyer Requests";
+}
+
+<h2>Buyer Requests</h2>
+<hr />
+<table class="table">
+    <tr>
+        <th>Product</th>
+        <th>Buyer        </th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Product.Title)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Name)
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+            <td>
+                @if (User.IsInRole("Admin") && item.Status == "Pending")
+                {
+                    using (Html.BeginForm("Create", "Orders", new { Id = item.Id }, FormMethod.Post))
+                    {
+                        <input type="submit" value="Create Order" class="btn btn-dark btn-sm" />
+                    }
+                }
+                @if (item.Status == "Proceed")
+                {
+                    <span class="text-success">Order Created</span>
+                }
+
+                @if (item.Status == "Pending")
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>

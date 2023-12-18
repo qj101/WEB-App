@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cead390deea64661beffc8c8cbc2c8bc" Name="Diagram1">
+        <EntityTypeShape EntityType="OnlineTradingHouseModel.BuyerFeedback" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTradingHouseModel.BuyerRequest" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTradingHouseModel.Order" Width="1.5" PointX="7.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTradingHouseModel.Payment" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTradingHouseModel.Product" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTradingHouseModel.User" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_BuyerFeedback_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_BuyerFeedback_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_BuyerRequest_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_BuyerRequest_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_Order_BuyerRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_Payment_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_Payment_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTradingHouseModel.FK_Product_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

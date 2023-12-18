@@ -1,0 +1,105 @@
+﻿@model OnlineTradingHouse.Models.User
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit User</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model=> model.Status)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <select name="Role" class="form-control" required>
+                <option value="">Select</option>
+                <option value="Supplier" @(Model.Role == "Supplier" ? Html.Raw("Selected") : Html.Raw(""))>Supplier</option>
+                <option value="Buyer" @(Model.Role == "Buyer" ? Html.Raw("Selected") : Html.Raw(""))>Buyer</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CNIC, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.CNIC, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <select name="Gender" class="form-control" required>
+                <option value="">Select</option>
+                <option value="Male" @(Model.Gender == "Male" ? Html.Raw("Selected") : Html.Raw(""))>Male</option>
+                <option value="Female" @(Model.Gender == "Female" ? Html.Raw("Selected") : Html.Raw(""))>Female</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <select name="Status" disabled="disabled" class="form-control">
+                
+                <option value="Accept"  @(Model.Status == "Accept" ? Html.Raw("Selected") : Html.Raw(""))>Accept</option>
+                <option value="Reject"  @(Model.Status == "Reject" ? Html.Raw("Selected") : Html.Raw(""))>Reject</option>
+                <option value="Block"  @(Model.Status == "Block" ? Html.Raw("Selected") : Html.Raw(""))>Block</option>
+            </select>
+        </div>
+    </div>
+    
+
+    <div class="form-group mt-3 mb-3">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-secondary" />
+        </div>
+    </div>
+</div>
+}

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<OnlineTradingHouse.Models.Payment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Payment List</h2>
+
+<table class="table" id="myTable">
+    <thead>
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.BuyerRequest.User.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.BuyerRequest.Product.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.Status)
+            </th>
+            <th>
+                Supplier
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.BuyerRequest.User.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.BuyerRequest.Product.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Name)
+            </td>
+        </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineTradingHouseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BuyerFeedback">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Feekback" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="BuyerId" Type="Int32" />
+    <Property Name="OrderId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_BuyerFeedback_Order" FromRole="BuyerFeedback" ToRole="Order" />
+    <NavigationProperty Name="User" Relationship="Self.FK_BuyerFeedback_User" FromRole="BuyerFeedback" ToRole="User" />
+  </EntityType>
+  <EntityType Name="BuyerRequest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BuyerId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_BuyerRequest_Product" FromRole="BuyerRequest" ToRole="Product" />
+    <NavigationProperty Name="User" Relationship="Self.FK_BuyerRequest_User" FromRole="BuyerRequest" ToRole="User" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_BuyerRequest" FromRole="BuyerRequest" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="BuyerRequestId" Type="Int32" />
+    <NavigationProperty Name="BuyerFeedbacks" Relationship="Self.FK_BuyerFeedback_Order" FromRole="Order" ToRole="BuyerFeedback" />
+    <NavigationProperty Name="BuyerRequest" Relationship="Self.FK_Order_BuyerRequest" FromRole="Order" ToRole="BuyerRequest" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
+    <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Order" FromRole="Order" ToRole="Payment" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" />
+    <Property Name="Amount" Type="Int32" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Payment_Order" FromRole="Payment" ToRole="Order" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Payment_User" FromRole="Payment" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Grade" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Size" Type="Int32" />
+    <Property Name="Weight" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AvailableQuantity" Type="Int32" />
+    <Property Name="RequiredDeliveryDays" Type="Int32" />
+    <Property Name="IsHomePageDisplay" Type="Boolean" Nullable="false" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BuyerRequests" Relationship="Self.FK_BuyerRequest_Product" FromRole="Product" ToRole="BuyerRequest" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Product_User" FromRole="Product" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Gender" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BuyerFeedbacks" Relationship="Self.FK_BuyerFeedback_User" FromRole="User" ToRole="BuyerFeedback" />
+    <NavigationProperty Name="BuyerRequests" Relationship="Self.FK_BuyerRequest_User" FromRole="User" ToRole="BuyerRequest" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
+    <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_User" FromRole="User" ToRole="Payment" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Product_User" FromRole="User" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_BuyerFeedback_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="BuyerFeedback" Type="Self.BuyerFeedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerFeedback">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerFeedback_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="BuyerFeedback" Type="Self.BuyerFeedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerFeedback">
+        <PropertyRef Name="BuyerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerRequest_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="BuyerRequest" Type="Self.BuyerRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerRequest">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerRequest_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="BuyerRequest" Type="Self.BuyerRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerRequest">
+        <PropertyRef Name="BuyerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_BuyerRequest">
+    <End Role="BuyerRequest" Type="Self.BuyerRequest" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BuyerRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="BuyerRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OnlineTradingHouseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BuyerFeedbacks" EntityType="Self.BuyerFeedback" />
+    <EntitySet Name="BuyerRequests" EntityType="Self.BuyerRequest" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Payments" EntityType="Self.Payment" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_BuyerFeedback_Order" Association="Self.FK_BuyerFeedback_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="BuyerFeedback" EntitySet="BuyerFeedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerFeedback_User" Association="Self.FK_BuyerFeedback_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="BuyerFeedback" EntitySet="BuyerFeedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerRequest_Product" Association="Self.FK_BuyerRequest_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="BuyerRequest" EntitySet="BuyerRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerRequest_User" Association="Self.FK_BuyerRequest_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="BuyerRequest" EntitySet="BuyerRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_BuyerRequest" Association="Self.FK_Order_BuyerRequest">
+      <End Role="BuyerRequest" EntitySet="BuyerRequests" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_Order" Association="Self.FK_Payment_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="Payment" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_User" Association="Self.FK_Payment_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Payment" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_User" Association="Self.FK_Product_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

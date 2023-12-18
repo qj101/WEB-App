@@ -1,0 +1,91 @@
+﻿@model IEnumerable<OnlineTradingHouse.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Order List</h2>
+
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>Buyer</th>
+            <th>Product</th>
+            <th>Description</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                Supplier
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuyerRequest.User.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuyerRequest.Product.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuyerRequest.Product.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Name)
+            </td>
+            <td>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                }
+                @if (User.IsInRole("Admin") || User.IsInRole("Supplier"))
+                {
+                    if (item.Status == "Complete")
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success btn-sm" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+                    }
+                }
+                @if (User.IsInRole("Buyer"))
+                {
+                    if (item.Status == "Complete")
+                    {
+                        @Html.ActionLink("Feedback", "Create", "BuyerFeedbacks", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+
+                    }
+                    else if (item.Status == "In Process")
+                    {
+                        using (Html.BeginForm("Create", "Payments", new { Id = item.Id }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Payment" class="btn btn-info btn-sm" />
+                        }
+                    }
+                    else
+                    {
+                        <span>---</span>
+                    }
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,75 @@
+﻿@model OnlineTradingHouse.Models.Order
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Order</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.SupplierId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BuyerRequest.BuyerId, "Buyer", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("BuyerId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.BuyerRequest.BuyerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BuyerRequest.Product.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BuyerRequest.Product.Title, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.BuyerRequest.Product.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BuyerRequest.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BuyerRequest.Product.Description, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.BuyerRequest.Product.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BuyerRequest.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BuyerRequest.Product.Price, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.BuyerRequest.Product.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select name="Status" class="form-control">
+
+                <option value="Pending" @(Model.Status == "Pending" ? Html.Raw("Selected") : Html.Raw(""))>Pending</option>
+                <option value="In Process" @(Model.Status == "In Process" ? Html.Raw("Selected") : Html.Raw(""))>In Process</option>
+                <option value="Complete" @(Model.Status == "Complete" ? Html.Raw("Selected") : Html.Raw(""))>Complete</option>
+            </select>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.BuyerRequestId)
+
+
+    <div class="form-group mt-3 mb-3">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-secondary" />
+        </div>
+    </div>
+</div>
+}

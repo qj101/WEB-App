@@ -1,0 +1,256 @@
+USE [master]
+GO
+/****** Object:  Database [OnlineTradingHouse]    Script Date: 8/26/2023 1:50:06 AM ******/
+CREATE DATABASE [OnlineTradingHouse]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'OnlineTradingHouse', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL13.SQLEXPRESS\MSSQL\DATA\OnlineTradingHouse.mdf' , SIZE = 4096KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'OnlineTradingHouse_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL13.SQLEXPRESS\MSSQL\DATA\OnlineTradingHouse_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [OnlineTradingHouse] SET COMPATIBILITY_LEVEL = 120
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [OnlineTradingHouse].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [OnlineTradingHouse] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET  MULTI_USER 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [OnlineTradingHouse] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [OnlineTradingHouse] SET QUERY_STORE = OFF
+GO
+USE [OnlineTradingHouse]
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET LEGACY_CARDINALITY_ESTIMATION = OFF;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 0;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET PARAMETER_SNIFFING = ON;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
+GO
+USE [OnlineTradingHouse]
+GO
+/****** Object:  Table [dbo].[BuyerFeedback]    Script Date: 8/26/2023 1:50:07 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BuyerFeedback](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Feekback] [varchar](max) NULL,
+	[BuyerId] [int] NULL,
+	[OrderId] [int] NULL,
+	[Date] [date] NULL,
+ CONSTRAINT [PK_BuyerFeedback] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[BuyerRequest]    Script Date: 8/26/2023 1:50:07 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BuyerRequest](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BuyerId] [int] NULL,
+	[ProductId] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[Status] [varchar](10) NULL,
+ CONSTRAINT [PK_BuyerRequest] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Order]    Script Date: 8/26/2023 1:50:07 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Order](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierId] [int] NULL,
+	[Status] [varchar](10) NULL,
+	[Date] [date] NULL,
+	[BuyerRequestId] [int] NULL,
+ CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Payment]    Script Date: 8/26/2023 1:50:07 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Payment](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[OrderId] [int] NULL,
+	[Amount] [int] NULL,
+	[SupplierId] [int] NULL,
+	[Status] [varchar](10) NULL,
+	[Date] [date] NULL,
+ CONSTRAINT [PK_Payment] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 8/26/2023 1:50:07 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [varchar](50) NOT NULL,
+	[Description] [varchar](max) NOT NULL,
+	[Grade] [varchar](10) NULL,
+	[Size] [int] NULL,
+	[Weight] [decimal](18, 0) NULL,
+	[Color] [varchar](50) NULL,
+	[Image] [varchar](max) NULL,
+	[AvailableQuantity] [int] NULL,
+	[RequiredDeliveryDays] [int] NULL,
+	[IsHomePageDisplay] [bit] NOT NULL,
+	[SupplierId] [int] NULL,
+	[Date] [date] NOT NULL,
+	[Price] [int] NOT NULL,
+ CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 8/26/2023 1:50:07 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[UserName] [varchar](50) NULL,
+	[Role] [varchar](50) NULL,
+	[Email] [varchar](100) NULL,
+	[Password] [varchar](30) NULL,
+	[CNIC] [varchar](15) NULL,
+	[Gender] [varchar](15) NULL,
+	[Age] [int] NULL,
+	[Address] [varchar](max) NULL,
+	[Status] [varchar](10) NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[BuyerFeedback]  WITH CHECK ADD  CONSTRAINT [FK_BuyerFeedback_Order] FOREIGN KEY([OrderId])
+REFERENCES [dbo].[Order] ([Id])
+GO
+ALTER TABLE [dbo].[BuyerFeedback] CHECK CONSTRAINT [FK_BuyerFeedback_Order]
+GO
+ALTER TABLE [dbo].[BuyerFeedback]  WITH CHECK ADD  CONSTRAINT [FK_BuyerFeedback_User] FOREIGN KEY([BuyerId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[BuyerFeedback] CHECK CONSTRAINT [FK_BuyerFeedback_User]
+GO
+ALTER TABLE [dbo].[BuyerRequest]  WITH CHECK ADD  CONSTRAINT [FK_BuyerRequest_Product] FOREIGN KEY([ProductId])
+REFERENCES [dbo].[Product] ([Id])
+GO
+ALTER TABLE [dbo].[BuyerRequest] CHECK CONSTRAINT [FK_BuyerRequest_Product]
+GO
+ALTER TABLE [dbo].[BuyerRequest]  WITH CHECK ADD  CONSTRAINT [FK_BuyerRequest_User] FOREIGN KEY([BuyerId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[BuyerRequest] CHECK CONSTRAINT [FK_BuyerRequest_User]
+GO
+ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_BuyerRequest] FOREIGN KEY([BuyerRequestId])
+REFERENCES [dbo].[BuyerRequest] ([Id])
+GO
+ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_BuyerRequest]
+GO
+ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_User] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_User]
+GO
+ALTER TABLE [dbo].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_Order] FOREIGN KEY([OrderId])
+REFERENCES [dbo].[Order] ([Id])
+GO
+ALTER TABLE [dbo].[Payment] CHECK CONSTRAINT [FK_Payment_Order]
+GO
+ALTER TABLE [dbo].[Payment]  WITH CHECK ADD  CONSTRAINT [FK_Payment_User] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[Payment] CHECK CONSTRAINT [FK_Payment_User]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_User] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_User]
+GO
+USE [master]
+GO
+ALTER DATABASE [OnlineTradingHouse] SET  READ_WRITE 
+GO

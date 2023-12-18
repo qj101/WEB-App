@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Online Trading House</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Dosis:300,400,500,,600,700,700i|Lato:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+</head>
+
+<body>
+
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <a href="/" class="logo">Online Trading House</a>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        int userId = OnlineTradingHouse.Models.UserInfo.GetUserID(User.Identity.Name);
+
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Users", "Index", "Users", new { area = "" }, new { @class = "nav-link scrollto" })</li>
+                            <li>@Html.ActionLink("Payments", "Index", "Payments", new { area = "" }, new { @class = "nav-link scrollto" })</li>
+                        }
+                        if (User.IsInRole("Admin") || User.IsInRole("Buyer"))
+                        {
+                            <li>@Html.ActionLink("Requests", "BuyerRequests", "BuyerRequest", new { area = "" }, new { @class = "nav-link scrollto" })</li>
+                        }
+                        if (User.IsInRole("Admin") || User.IsInRole("Supplier") || User.IsInRole("Buyer"))
+                        {
+                            <li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link scrollto" })</li>
+                            <li>@Html.ActionLink("Orders", "Index", "Orders", new { area = "" }, new { @class = "nav-link scrollto" })</li>
+                            <li>@Html.ActionLink("Feedback", "Index", "BuyerFeedbacks", new { area = "" }, new { @class = "nav-link scrollto" })</li>
+                        }
+                        <li>@Html.ActionLink("Setting", "Edit", "Users", new { id = userId }, new { @class = "smoothScroll" })</li>
+                        <li> @Html.ActionLink("Logout", "Logout", "Users", new { area = "" }, new { @class = "smoothScroll" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Register", "Create", "Users", new { area = "" }, new { @class = "smoothScroll" })</li>
+                        <li>@Html.ActionLink("Login", "Login", "Users", new { area = "" }, new { @class = "smoothScroll" })</li>
+                    }
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="d-flex align-items-center">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                    <h1>Online Trading House</h1>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                    <img src="~/assets/img/hero-img.png" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <main id="main">
+        <div class="container">
+            @RenderBody()
+        </div>
+
+    </main>
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>Online Trading House</h3>
+                        <p>
+                            A108 Adam Street <br>
+                            Lahore, LHR 54000<br>
+                            Pakistan <br><br>
+                            <strong>Phone:</strong> +92 5589 55488 55<br>
+                            <strong>Email:</strong> info@tradinghouse.com<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-4">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Online Trading House</span></strong>. All Rights Reserved
+            </div>
+
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <script>
+
+        function UpdateStatus(id) {
+            var data = {
+                status: $("#StatusVal_" + id).val(),
+                userId: id
+            }
+            console.log(data);
+            $.ajax({
+                type: 'POST',
+                url: '/Users/StatusUpdate',
+                data: data,
+                success: function (result) {
+
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+</body>
+
+</html>

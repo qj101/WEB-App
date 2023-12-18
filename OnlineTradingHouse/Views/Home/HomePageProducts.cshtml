@@ -1,0 +1,29 @@
+﻿
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    @*@Url.Content("~/Images/example.jpg")*@
+                    <img src="~/Images/@item.Image" class="card-img-top" alt="@item.Title" width="360" height="240">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Description</p>
+                        @if (User.IsInRole("Buyer"))
+                        {
+                            using (Html.BeginForm("RequestNow", "Products", new { id = item.Id }, FormMethod.Get))
+                            {
+                                <input type="submit" value="Request Now" class="btn btn-primary btn-sm" />
+                            }
+                        }
+                            @*@Html.ActionLink("Request Now", "RequestNow", "Products", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" },)*@
+                        </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineTradingHouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BuyerFeedback">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Feekback" Type="varchar(max)" />
+    <Property Name="BuyerId" Type="int" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="BuyerRequest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BuyerId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="Status" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="10" />
+    <Property Name="Date" Type="date" />
+    <Property Name="BuyerRequestId" Type="int" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="Amount" Type="int" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="10" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="Grade" Type="varchar" MaxLength="10" />
+    <Property Name="Size" Type="int" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Color" Type="varchar" MaxLength="50" />
+    <Property Name="Image" Type="varchar(max)" />
+    <Property Name="AvailableQuantity" Type="int" />
+    <Property Name="RequiredDeliveryDays" Type="int" />
+    <Property Name="IsHomePageDisplay" Type="bit" Nullable="false" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Role" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Password" Type="varchar" MaxLength="30" />
+    <Property Name="CNIC" Type="varchar" MaxLength="15" />
+    <Property Name="Gender" Type="varchar" MaxLength="15" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Address" Type="varchar(max)" />
+    <Property Name="Status" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_BuyerFeedback_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="BuyerFeedback" Type="Self.BuyerFeedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerFeedback">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerFeedback_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="BuyerFeedback" Type="Self.BuyerFeedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerFeedback">
+        <PropertyRef Name="BuyerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerRequest_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="BuyerRequest" Type="Self.BuyerRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerRequest">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerRequest_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="BuyerRequest" Type="Self.BuyerRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BuyerRequest">
+        <PropertyRef Name="BuyerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_BuyerRequest">
+    <End Role="BuyerRequest" Type="Self.BuyerRequest" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BuyerRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="BuyerRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OnlineTradingHouseModelStoreContainer">
+    <EntitySet Name="BuyerFeedback" EntityType="Self.BuyerFeedback" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BuyerRequest" EntityType="Self.BuyerRequest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BuyerFeedback_Order" Association="Self.FK_BuyerFeedback_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="BuyerFeedback" EntitySet="BuyerFeedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerFeedback_User" Association="Self.FK_BuyerFeedback_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="BuyerFeedback" EntitySet="BuyerFeedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerRequest_Product" Association="Self.FK_BuyerRequest_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="BuyerRequest" EntitySet="BuyerRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerRequest_User" Association="Self.FK_BuyerRequest_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="BuyerRequest" EntitySet="BuyerRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_BuyerRequest" Association="Self.FK_Order_BuyerRequest">
+      <End Role="BuyerRequest" EntitySet="BuyerRequest" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_Order" Association="Self.FK_Payment_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="Payment" EntitySet="Payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_User" Association="Self.FK_Payment_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Payment" EntitySet="Payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_User" Association="Self.FK_Product_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

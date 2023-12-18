@@ -1,0 +1,124 @@
+﻿@model OnlineTradingHouse.Models.Product
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Add New Product</h2>
+
+@using (Html.BeginForm("Create","Products",FormMethod.Post,new {enctype = "multipart/form-data"})) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Grade, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <select name="Grade" class="form-control" required>
+                <option value="">Select</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <input type="file" class="form-control" name="Image" required>
+            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AvailableQuantity, "Available Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.AvailableQuantity, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.AvailableQuantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.RequiredDeliveryDays, "Required Delivery Days", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.RequiredDeliveryDays, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.RequiredDeliveryDays, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsHomePageDisplay, "Is Home Page Display", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.CheckBoxFor(model => model.IsHomePageDisplay, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.IsHomePageDisplay, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    @Html.HiddenFor(model => model.SupplierId)
+    <div class="form-group mt-3 mb-3">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+@*<form action="/" method="post">
+    <label>Title</label>
+    <input type="text"  class="form-control col-4" name="Title" placeholder="title" />
+
+    <label>Description</label>
+    <input type="text" name="Description"  class="form-control" placeholder="description" />
+
+
+    <input type="submit" value="Submit" class="btn btn-primary"/>
+
+</form>*@

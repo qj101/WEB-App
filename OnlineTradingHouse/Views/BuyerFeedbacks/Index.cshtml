@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OnlineTradingHouse.Models.BuyerFeedback>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Feedback List</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Feekback)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.BuyerRequest.Product.Title)
+        </th>
+        <th>Date</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.BuyerRequest.User.Name)
+        </th>
+        <th>Action</th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Feekback)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Order.BuyerRequest.Product.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Order.BuyerRequest.User.Name)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+    </td>
+</tr>
+}
+
+</table>
